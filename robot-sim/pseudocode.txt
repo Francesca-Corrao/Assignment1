@@ -82,18 +82,18 @@ function to go the closest gold token and once it is there release the silver to
 
 while you haven't grab every token
 	find the closest silver
-	go to the closest silver token
 	if your distance less then threshold
-		release silver token
+		grab silver token
 		turn around 
 		find the closest gold
 		go to the golden token 
 		if you are close to the golden token
-			release golden token		
+			release silver token
+	else go to the the silver token 
 			
 
 
-		return dist, orientation, code
+		
 
 
 function to find gold is the same will change only the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token 
