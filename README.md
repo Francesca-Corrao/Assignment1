@@ -66,7 +66,7 @@ How it works
 ---------
 To reach the goal the robot will look for token in front of it and choose the closest one, go to it and grad it. After grabbing the token the robot will turn look for golden token in front of it and go to the closest one and once it is close enought to it will release the silver token. This untill it each silver is with a different gold. 
 The pseudocode of an algorithm to do it is the following: 
-```
+``` python
 while you haven't grab every token
 	find the closest silver
 	if your distance less then threshold
