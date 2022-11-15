@@ -9,7 +9,7 @@ To do this we will use a python robot simulator developed by [Student Robotics](
 How to Run the solution
 ----------------------
 In order to run the solution inside the robot-sim folder you have to execute 
-```
+```shell
 python2 run.py assignment.py
 ```
 it's important to specify to use python 2 because otherwise it won't execute if try to execute with python 3
@@ -37,7 +37,7 @@ function to find the closest silver token
 
 ```python
 	set an empty list
-	for evry token seen
+	for every token seen
 		if the token is silver and it isn't already taken
 			add to the list of silver token distance, orientation and code of the silver token
 	if silver is empty 
