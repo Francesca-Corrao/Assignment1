@@ -1,21 +1,21 @@
-Research Track 1- Assignment 1
+Research Track I: Assignment 1
 ================================
 
-This the repository for the solution of the First Assignemnt for the course Research Trask 1.
+This the repository for the solution of Research Track 1 first assignment.
 
-The goal of the assignment is to develop a robot that make pairs of silver and gold marker on the map by taking a silver marker and bring it to a gold one.
+The goal of the assignment is to develop a code that make pairs of silver and gold marker on the map by taking a silver marker and bring it to a gold one.
 To do this we will use a python robot simulator developed by [Student Robotics](https://studentrobotics.org) with arenas modified for the class.
 
 How to Run the solution
 ----------------------
-In order to run the solution inside the robot-sim folder you have to execute 
+In order to run the solution inside the robot-sim folder you have to execute the comand
 ```
 python2 run.py assignment.py
 ```
 
 How it works 
 ---------
-To reach the goal the robot will look for token in front of it and choose the closest one, go to it and grad it. After grabbing the token the robot will turn look for golden token in front of it and go to the closest one and once it is close enought to it will release the silver token. This untill it each silver is with a different gold. 
+To reach the goal the robot will look for tokens in front of it and choose the closest one, go to it and grab it. After grabbing the token the robot will turn looking for closest gold token in front of it, go to the closest one and once it is close enought to it will release the silver token. This will be done untill every silver token is with a different gold token. 
 The pseudocode of an algorithm to do it is the following: 
 ``` python
 while you haven't grab every token
@@ -30,33 +30,23 @@ while you haven't grab every token
 	else go to the the silver token 
 ```
 
-To do this there have been implement four function used in the main
-### find_silver_token() ###
-function to find the closest silver token and return it's distance, rotation and code
+To do this there have been implement different function and a main 
+
+### main ###
 
 ```python
-	set an empty list
-	for every token seen
-		if the token is silver and it isn't already taken
-			add to the list of silver token, distance, orientation and code of the token
-	if silver is empty 
-		return -1, -1 , -1
-	else 
-		sort list of silver token by increasing distances
-		set dist to 100 
-		if distance of the first element in list of silver token is less then dist
-			set dist to distance of first element in the list of silver token
-			set orienation to the orienation to the first silver token 
-			set code to the code of the first silver token
-		if dist is 100 
-			return -1, -1,-1
-		else 
-			return dist, orientation, code
+	initialize the robot 
+	set the threshold for the orientation a_th
+	set linear distance threshold for grab silver token d_th
+	set linear distance threshold for release gold token d_th_gold
+	set an empty list where it will put the silver token once it grab it silver
+	set an empty list where put the golden token once it release the silver token near to it gold
+	go_silver()
+	turn
+	drive
+	notice task ended
+	
 ```
-
-
-### find_gold_token() ###
-function to find the closest gold token and return it's distance, orientation and code. It is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
 
 ### go_silver() ###
 function that got the distance of the closest silver token using the function find_silver_token(), turn and drive in order to go to it and once it's there grab the token, put the code of it in the list of already taken silver token and call the function go_gold().
@@ -79,6 +69,28 @@ function that got the distance of the closest silver token using the function fi
 			turn right
 ```
 
+### find_silver_token() ###
+function to find the closest silver token and return it's distance, rotation and code
+
+```python
+	set an empty list
+	for every token seen
+		if the token is silver and it isn't already taken
+			add to the list of silver token, distance, orientation and code of the token
+	if silver is empty 
+		return -1, -1 , -1
+	else 
+		sort list of silver token by increasing distances
+		set dist to 100 
+		if distance of the first element in list of silver token is less then dist
+			set dist to distance of first element in the list of silver token
+			set orienation to the orienation to the first silver token 
+			set code to the code of the first silver token
+		if dist is 100 
+			return -1, -1,-1
+		else 
+			return dist, orientation, code
+```
 ### go_gold() ###
 function that get distance, orientation and code of the closest gold token, drive and turn to go to it and once it is there release the silver token it grabbed before and add the code of the gold token to the list of already taken gold token.
 
@@ -98,22 +110,14 @@ function that get distance, orientation and code of the closest gold token, driv
 		elif robot not aligned with the token, token on the right
 			turn right
 ```
-### main ###
 
-```python
-	initialize the robot 
-	set the threshold for the orientation a_th
-	set linear distance threshold for grab silver token d_th
-	set linear distance threshold for release gold token d_th_gold
-	set an empty list where it will put the silver token once it grab it silver
-	set an empty list where put the golden token once it release the silver token near to it gold
-	go_silver()
-	turn
-	drive
-	notice task ended
-	
-```
+### find_gold_token() ###
+function to find the closest gold token and return it's distance, orientation and code. It is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
 
+### turn and drive ###
+these are two function that will make the robot move
+* `drive`: given a speed and a time will make the robot go forward for time making the motors move with the speed passed
+* `turn`: given a speed and a time will make the robot turn for a time by making the motors rotate in different rotation with the speed passed
 
 Robot API
 ---------
