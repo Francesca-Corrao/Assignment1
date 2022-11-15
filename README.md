@@ -32,10 +32,73 @@ while you haven't grab every token
 	else go to the the silver token 
 ```
 to do this I implement four main function
-###find_silver_token()###
-###find_gold_token()###
-###go_silver()###
-###go_gold()###
+### find_silver_token() ###
+function to find the closest silver token 
+
+```python
+	set an empty list
+	for evry token seen
+		if the token is silver and it isn't already taken
+			add to the list of silver token distance, orientation and code of the silver token
+	if silver is empty 
+		return -1, -1 , -1
+	else 
+		sort the list of silver token by increasing distances
+		set dist to 100 
+		if the distance of the first element of the list of silver token is less then dist
+			set dist to distance of first element in the list of silver token
+			set orienation to the orienation to the first silver token 
+			set code to the code of the first silver token
+		if dist is 100 
+			return -1, -1,-1
+		else 
+			return dist, orientation, code
+```
+
+
+### find_gold_token() ###
+function to find gold is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token 
+
+
+### go_silver() ###
+function to go the closest silver token and once it's there grab it and call the function go_gold()
+
+```python
+	while haven't got every silver token (list of silver token has less then 6 elements):
+		find_silver_token()
+		if it doesn't see any token:
+			turn
+		elif the distance is less than the linear distance threshold
+			release the token you grabbed 
+			add the id of the token to the list of taken silver token
+			return
+		elif robot is aligned with the token
+			go forward
+		elif robot not aligned with the token, token on the left
+			turn left
+		elif robot not aligned with the token, token on the right
+			turn right
+```
+
+### go_gold() ###
+function to go the closest gold token and once it is there release the silver token it grabbed before
+
+```python 
+	while haven't go to every gold token (list of gold token has less then 6 elements):
+		find_gold_token()
+		if it doesn't see any token:
+			turn
+		elif the distance is less than the linear distance threshold for gold
+			release the token you grabbed 
+			add the id of the token to the list of taken gold token
+			return
+		elif robot is aligned with the token
+			go forward
+		elif robot not aligned with the token, token on the left
+			turn left
+		elif robot not aligned with the token, token on the right
+			turn right
+```
 
 Robot API
 ---------
