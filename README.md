@@ -31,7 +31,8 @@ while you haven't grab every token
 			release silver token
 	else go to the the silver token 
 ```
-to do this I implement four function
+to do this there have been implement four function used in the main
+
 ### find_silver_token() ###
 function to find the closest silver token 
 
