@@ -2,6 +2,7 @@ Research Track 1- Assignment 1
 ================================
 
 This the repository for the solution of the First Assignemnt for the course Research Trask 1.
+
 The goal of the assignment is to develop a robot that make pairs of silver and gold marker on the map by taking a silver marker and bring it to a gold one.
 To do this we will use a python robot simulator developed by [Student Robotics](https://studentrobotics.org) with arenas modified for the class.
 
