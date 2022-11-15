@@ -14,6 +14,29 @@ python2 run.py assignment.py
 ```
 it's important to specify to use python 2 because otherwise it won't execute if try to execute with python 3
 
+
+How it works 
+---------
+To reach the goal the robot will look for token in front of it and choose the closest one, go to it and grad it. After grabbing the token the robot will turn look for golden token in front of it and go to the closest one and once it is close enought to it will release the silver token. This untill it each silver is with a different gold. 
+The pseudocode of an algorithm to do it is the following: 
+``` python
+while you haven't grab every token
+	find the closest silver
+	if your distance less then threshold
+		grab silver token
+		turn around 
+		find the closest gold
+		go to the golden token 
+		if you are close to the golden token
+			release silver token
+	else go to the the silver token 
+```
+to do this I implement four main function
+###find_silver_token()###
+###find_gold_token()###
+###go_silver()###
+###go_gold()###
+
 Robot API
 ---------
 
@@ -61,28 +84,6 @@ Each `Marker` object has the following attributes:
 * `res`: the value of the `res` parameter of `R.see`, for compatibility with the SR API.
 * `rot_y`: an alias for `centre.rot_y`
 * `timestamp`: the time at which the marker was seen (when `R.see` was called).
-
-How it works 
----------
-To reach the goal the robot will look for token in front of it and choose the closest one, go to it and grad it. After grabbing the token the robot will turn look for golden token in front of it and go to the closest one and once it is close enought to it will release the silver token. This untill it each silver is with a different gold. 
-The pseudocode of an algorithm to do it is the following: 
-``` python
-while you haven't grab every token
-	find the closest silver
-	if your distance less then threshold
-		grab silver token
-		turn around 
-		find the closest gold
-		go to the golden token 
-		if you are close to the golden token
-			release silver token
-	else go to the the silver token 
-```
-to do this I implement four main function 
-##find_silver_token()##
-##find_gold_token()##
-##go_silver()##
-##go_gold()##
 
 
 Improvement
