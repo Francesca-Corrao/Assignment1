@@ -1,7 +1,8 @@
 Research Track 1- Assignment 1
 ================================
 
-describe assignmente
+We want to make a robot that make pairs of silver and gold marker on the map by taking a silver marker and bring it to a gold one.
+To do this we will use a python robot simulator developed by [Student Robotics](https://studentrobotics.org) with arenas modified for the class.
 
 How to Run the solution
 ----------------------
