@@ -43,8 +43,8 @@ To do this there have been implement different function and a main
 	set an empty list where it will put the silver token once it grab it silver
 	set an empty list where put the golden token once it release the silver token near to it gold
 	go_silver()
-	turn
-	drive
+	turn()
+	drive()
 	notice task ended
 	
 ```
@@ -56,18 +56,18 @@ function that got the distance of the closest silver token using the function fi
 	while haven't got every silver token (list of silver token has less then 6 elements):
 		find_silver_token()
 		if it doesn't see any token:
-			turn
+			turn()
 		elif the distance is less than the linear distance threshold
-			grab the silver token
+			grab() silver token
 			add the id of the token to the list of taken silver token
 			call function go_gold()
 			return
 		elif robot is aligned with the token
-			go forward
+			drive()
 		elif robot not aligned with the token, token on the left
-			turn left
+			turn() left
 		elif robot not aligned with the token, token on the right
-			turn right
+			turn() right
 ```
 ### go_gold() ###
 function that get distance, orientation and code of the closest gold token, drive and turn to go to it and once it is there release the silver token it grabbed before and add the code of the gold token to the list of already taken gold token.
@@ -76,17 +76,17 @@ function that get distance, orientation and code of the closest gold token, driv
 	while haven't go to every gold token (list of gold token has less then 6 elements):
 		find_gold_token()
 		if it doesn't see any token:
-			turn
+			turn()
 		elif the distance is less than the linear distance threshold for gold
-			release silver token
+			release() silver token
 			add the id of the token to the list of taken gold token
 			return
 		elif robot is aligned with the token
-			go forward
+			drive()
 		elif robot not aligned with the token, token on the left
-			turn left
+			turn() left
 		elif robot not aligned with the token, token on the right
-			turn right
+			turn() right
 ```
 ### find_silver_token() ###
 function to find the closest silver token and return it's distance, rotation and code
