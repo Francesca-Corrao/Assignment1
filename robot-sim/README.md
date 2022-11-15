@@ -1,44 +1,122 @@
-Python Robotics Simulator
+Research Track I: Assignment 1
 ================================
 
-This is a simple, portable robot simulator developed by [Student Robotics](https://studentrobotics.org).
-Some of the arenas and the exercises have been modified for the Research Track I course
+This the repository for the solution of Research Track 1 first assignment.
 
-Installing and running
+The goal of the assignment is to develop a code that make pairs of silver and gold marker on the map by taking a silver marker and bring it to a gold one.
+To do this we will use a python robot simulator developed by [Student Robotics](https://studentrobotics.org) with arenas modified for the class.
+
+How to Run the solution
 ----------------------
-
-The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
-
-Pygame, unfortunately, can be tricky (though [not impossible](http://askubuntu.com/q/312767)) to install in virtual environments. If you are using `pip`, you might try `pip install hg+https://bitbucket.org/pygame/pygame`, or you could use your operating system's package manager. Windows users could use [Portable Python](http://portablepython.com/). PyPyBox2D and PyYAML are more forgiving, and should install just fine using `pip` or `easy_install`.
-
-## Troubleshooting
-
-When running `python run.py <file>`, you may be presented with an error: `ImportError: No module named 'robot'`. This may be due to a conflict between sr.tools and sr.robot. To resolve, symlink simulator/sr/robot to the location of sr.tools.
-
-On Ubuntu, this can be accomplished by:
-* Find the location of srtools: `pip show sr.tools`
-* Get the location. In my case this was `/usr/local/lib/python2.7/dist-packages`
-* Create symlink: `ln -s path/to/simulator/sr/robot /usr/local/lib/python2.7/dist-packages/sr/`
-
-## Exercise
------------------------------
-
-To run one or more scripts in the simulator, use `run.py`, passing it the file names. 
-
-I am proposing you three exercises, with an increasing level of difficulty.
-The instruction for the three exercises can be found inside the .py files (exercise1.py, exercise2.py, exercise3.py).
-
-When done, you can run the program with:
-
-```bash
-$ python run.py exercise1.py
+In order to run the solution inside the robot-sim folder you have to execute the comand
+```
+python2 run.py assignment.py
 ```
 
-You have also the solutions of the exercises (folder solutions)
+How it works 
+---------
+To reach the goal the robot will look for tokens in front of it and choose the closest one, go to it and grab it. After grabbing the token the robot will turn looking for closest gold token in front of it, go to the closest one and once it is close enought to it will release the silver token. This will be done untill every silver token is with a different gold token. 
 
-```bash
-$ python run.py solutions/exercise1_solution.py
+The pseudocode of an algorithm to do it is the following: 
+``` python
+while you haven't grab every token
+	find the closest silver
+	if your distance less then threshold
+		grab silver token
+		turn around 
+		find the closest gold
+		go to the golden token 
+		if you are close to the golden token
+			release silver token
+	else go to the the silver token 
 ```
+
+To do this there have been implement different function and a main 
+
+### main ###
+
+```python
+	initialize the robot 
+	set the threshold for the orientation a_th
+	set linear distance threshold for grab silver token d_th
+	set linear distance threshold for release gold token d_th_gold
+	set an empty list where it will put the silver token once it grab it silver
+	set an empty list where put the golden token once it release the silver token near to it gold
+	go_silver()
+	turn
+	drive
+	notice task ended
+	
+```
+
+### go_silver() ###
+function that got the distance of the closest silver token using the function find_silver_token(), turn and drive in order to go to it and once it's there grab the token, put the code of it in the list of already taken silver token and call the function go_gold().
+
+```python
+	while haven't got every silver token (list of silver token has less then 6 elements):
+		find_silver_token()
+		if it doesn't see any token:
+			turn
+		elif the distance is less than the linear distance threshold
+			grab the silver token
+			add the id of the token to the list of taken silver token
+			call function go_gold()
+			return
+		elif robot is aligned with the token
+			go forward
+		elif robot not aligned with the token, token on the left
+			turn left
+		elif robot not aligned with the token, token on the right
+			turn right
+```
+### go_gold() ###
+function that get distance, orientation and code of the closest gold token, drive and turn to go to it and once it is there release the silver token it grabbed before and add the code of the gold token to the list of already taken gold token.
+
+```python 
+	while haven't go to every gold token (list of gold token has less then 6 elements):
+		find_gold_token()
+		if it doesn't see any token:
+			turn
+		elif the distance is less than the linear distance threshold for gold
+			release silver token
+			add the id of the token to the list of taken gold token
+			return
+		elif robot is aligned with the token
+			go forward
+		elif robot not aligned with the token, token on the left
+			turn left
+		elif robot not aligned with the token, token on the right
+			turn right
+```
+### find_silver_token() ###
+function to find the closest silver token and return it's distance, rotation and code
+
+```python
+	set an empty list
+	for every token seen
+		if the token is silver and it isn't already taken
+			add to the list of silver token, distance, orientation and code of the token
+	if silver is empty 
+		return -1, -1 , -1
+	else 
+		sort list of silver token by increasing distances
+		set dist to 100 
+		if distance of the first element in list of silver token is less then dist
+			set dist to distance of first element in the list of silver token
+			set orienation to the orienation to the first silver token 
+			set code to the code of the first silver token
+		if dist is 100 
+			return -1, -1,-1
+		else 
+			return dist, orientation, code
+```
+### find_gold_token() ###
+function to find the closest gold token and return it's distance, orientation and code. It is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
+
+### turn and drive ###
+these are two function that will make the robot move:
+* `drive`: given a speed and a time will make the robot go forward for time making the motors move with the speed passed
+* `turn`: given a speed and a time will make the robot turn for a time by making the motors rotate in different rotation with the speed passed
 
 Robot API
 ---------
@@ -49,7 +127,7 @@ The API for controlling a simulated robot is designed to be as similar as possib
 
 The simulated robot has two motors configured for skid steering, connected to a two-output [Motor Board](https://studentrobotics.org/docs/kit/motor_board). The left motor is connected to output `0` and the right motor to output `1`.
 
-The Motor Board API is identical to [that of the SR API](https://studentrobotics.org/docs/programming/sr/motors/), except that motor boards cannot be addressed by serial number. So, to turn on the spot at one quarter of full power, one might write the following:
+So, to turn on the spot at one quarter of full power, one might write the following:
 
 ```python
 R.motors[0].m0.power = 25
@@ -64,11 +142,7 @@ The robot is equipped with a grabber, capable of picking up a token which is in 
 success = R.grab()
 ```
 
-The `R.grab` function returns `True` if a token was successfully picked up, or `False` otherwise. If the robot is already holding a token, it will throw an `AlreadyHoldingSomethingException`.
-
 To drop the token, call the `R.release` method.
-
-Cable-tie flails are not implemented.
 
 ### Vision ###
 
@@ -89,17 +163,8 @@ Each `Marker` object has the following attributes:
 * `rot_y`: an alias for `centre.rot_y`
 * `timestamp`: the time at which the marker was seen (when `R.see` was called).
 
-For example, the following code lists all of the markers the robot can see:
-
-```python
-markers = R.see()
-print "I can see", len(markers), "markers:"
-
-for m in markers:
-    if m.info.marker_type in (MARKER_TOKEN_GOLD, MARKER_TOKEN_SILVER):
-        print " - Token {0} is {1} metres away".format( m.info.offset, m.dist )
-    elif m.info.marker_type == MARKER_ARENA:
-        print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
-```
-
-[sr-api]: https://studentrobotics.org/docs/programming/sr/
+Improvement
+-----------
+This code work very weel for the specific problem it has to face but there are some improvements that can be done in order to make the code more :
+* when choosing a silver token we can verify that there are no golden token in the trajectory between the closest and the robot otherwise the robot when go to the silver token will take the golden one with it and so can never grab the silver token. The same can happen when choosing the gold token
+* modify the ending condition of the while so the robot can search for more or less then 6 token depend on how many there are non the map 
