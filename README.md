@@ -20,9 +20,9 @@ R.motors[0].m1.power = -25
 
 PseudoCode
 ----------
-'''
-pseudo code
-'''
+```
+int i = 
+```
 
 Improvement
 -----------
