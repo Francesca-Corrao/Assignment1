@@ -39,13 +39,13 @@ function to find the closest silver token
 	set an empty list
 	for every token seen
 		if the token is silver and it isn't already taken
-			add to the list of silver token distance, orientation and code of the silver token
+			add to the list of silver token, distance, orientation and code of the token
 	if silver is empty 
 		return -1, -1 , -1
 	else 
-		sort the list of silver token by increasing distances
+		sort list of silver token by increasing distances
 		set dist to 100 
-		if the distance of the first element of the list of silver token is less then dist
+		if distance of the first element in list of silver token is less then dist
 			set dist to distance of first element in the list of silver token
 			set orienation to the orienation to the first silver token 
 			set code to the code of the first silver token
@@ -57,11 +57,11 @@ function to find the closest silver token
 
 
 ### find_gold_token() ###
-function to find gold is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token 
+function to find gold is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
 
 
 ### go_silver() ###
-function to go the closest silver token and once it's there grab it and call the function go_gold()
+function that got the distance of the closest silver token, go to it and once it's there grab it and call the function go_gold().
 
 ```python
 	while haven't got every silver token (list of silver token has less then 6 elements):
@@ -82,7 +82,7 @@ function to go the closest silver token and once it's there grab it and call the
 ```
 
 ### go_gold() ###
-function to go the closest gold token and once it is there release the silver token it grabbed before
+function to get distance, orientation and code of the closest gold token, go to it and once it is there release the silver token it grabbed before.
 
 ```python 
 	while haven't go to every gold token (list of gold token has less then 6 elements):
@@ -110,7 +110,9 @@ function to go the closest gold token and once it is there release the silver to
 	set an empty list where it will put the silver token once it grab it silver
 	set an empty list where put the golden token once it release the silver token near to it gold
 	go_silver()
-	after  the task end 
+	turn
+	drive
+	notice task ended
 	
 ```
 
@@ -166,3 +168,7 @@ Each `Marker` object has the following attributes:
 
 Improvement
 -----------
+This code work very weel for the specific problem it has to face but there are some improvement that can be make in order to make the code more :
+* when choosing a silver token we can verify that there are no golden token in the trajectory between the closest and the robot otherwise the robot when go to the silver token will take the golden one with it and so can never grab the silver token. The same can happen when choosing the gold token
+* modify the ending condition of the while so the robot can search for more or less then 6 token depend on how many there are non the map 
+*  
