@@ -12,8 +12,6 @@ In order to run the solution inside the robot-sim folder you have to execute
 ```
 python2 run.py assignment.py
 ```
-it's important to specify to use python 2 because otherwise it won't execute if try to execute with python 3
-
 
 How it works 
 ---------
@@ -31,10 +29,10 @@ while you haven't grab every token
 			release silver token
 	else go to the the silver token 
 ```
-to do this there have been implement four function used in the main
 
+To do this there have been implement four function used in the main
 ### find_silver_token() ###
-function to find the closest silver token 
+function to find the closest silver token and return it's distance, rotation and code
 
 ```python
 	set an empty list
@@ -58,11 +56,10 @@ function to find the closest silver token
 
 
 ### find_gold_token() ###
-function to find gold is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
-
+function to find the closest gold token and return it's distance, orientation and code. It is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
 
 ### go_silver() ###
-function that got the distance of the closest silver token, go to it and once it's there grab it and call the function go_gold().
+function that got the distance of the closest silver token using the function find_silver_token(), turn and drive in order to go to it and once it's there grab the token, put the code of it in the list of already taken silver token and call the function go_gold().
 
 ```python
 	while haven't got every silver token (list of silver token has less then 6 elements):
@@ -83,7 +80,7 @@ function that got the distance of the closest silver token, go to it and once it
 ```
 
 ### go_gold() ###
-function to get distance, orientation and code of the closest gold token, go to it and once it is there release the silver token it grabbed before.
+function that get distance, orientation and code of the closest gold token, drive and turn to go to it and once it is there release the silver token it grabbed before and add the code of the gold token to the list of already taken gold token.
 
 ```python 
 	while haven't go to every gold token (list of gold token has less then 6 elements):
@@ -172,4 +169,6 @@ Improvement
 This code work very weel for the specific problem it has to face but there are some improvement that can be make in order to make the code more :
 * when choosing a silver token we can verify that there are no golden token in the trajectory between the closest and the robot otherwise the robot when go to the silver token will take the golden one with it and so can never grab the silver token. The same can happen when choosing the gold token
 * modify the ending condition of the while so the robot can search for more or less then 6 token depend on how many there are non the map 
-*  
+Other improvement that won't make it more general are:
+*get the distance, orientation and code only one so it won't change the token while going there 
+* make sure it grab a silver token that hasn't already taken by add an if before the grab 
