@@ -171,5 +171,5 @@ This code work very weel for the specific problem it has to face but there are s
 * modify the ending condition of the while so the robot can search for more or less then 6 token depend on how many there are non the map 
 
 Other improvement that won't make it more general are:
-*get the distance, orientation and code only one so it won't change the token while going there 
+* get the distance, orientation and code only one so it won't change the token while going there 
 * make sure it grab a silver token that hasn't already taken by add an if before the grab 
