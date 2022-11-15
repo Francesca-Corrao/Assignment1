@@ -1,9 +1,84 @@
-set the threshold for the orientation
-set threshold for distance
-set distance threshold for gold token
+initialize the robot 
+set the threshold for the orientation a_th
+set linear distance threshold for grab silver token d_th
+set linear distance threshold for release gold token d_th_gold
+set an empty list where it will put the silver token once it grab it silver
+set an empty list where put the golden token once it release the silver token near to it gold
 
-set an empty list where put silver token
-set an empty list where put gold token
+function to go forward
+
+function to turn 
+
+def find_silver_token():
+function to find the closest silver token 
+	set an empty list
+	for evry token seen
+		if the token is silver and it isn't already taken
+			add to the list of silver token distance, orientation and code of the silver token
+	if silver is empty 
+		return -1, -1 , -1
+	else 
+		sort the list of silver token by increasing distances
+		set dist to 100 
+		if the distance of the first element of the list of silver token is less then dist
+			set dist to distance of first element in the list of silver token
+			set orienation to the orienation to the first silver token 
+			set code to the code of the first silver token
+		if dist is 100 
+			return -1, -1,-1
+		else 
+			return dist, orientation, code
+
+def find_gold_token():
+function to find gold is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token 
+
+def go_gold():
+function to go the closest gold token and once it is there release the silver token it grabbed before
+	while haven't go to every gold token (list of gold token has less the 6 elements):
+		find_gold_token()
+		if it doesn't see any token:
+			turn
+		elif the distance is less than the linear distance threshold for gold
+			release the token you grabbed 
+			add the id of the token to the list of taken gold token
+			return
+		elif robot is aligned with the token
+			go forward
+		elif robot not aligned with the token, token on the left
+			turn left
+		elif robot not aligned with the token, token on the right
+			turn right
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+	
 
 while you haven't grab every token
 	find the closest silver
@@ -17,23 +92,7 @@ while you haven't grab every token
 			release golden token		
 			
 
-function to find the closest silver token 
-set an empty list
-for evry token seen
-	if the token is silver and it isn't already taken
-		add to the list of silver token distance, orientation and code of the silver token
-if silver is empty 
-	return -1, -1 , -1
-else 
-	sort the list of silver token by increasing distances
-	set dist to 100 
-	if the distance of the first element of the list of silver token is less then dist
-		set dist to distance of first element in the list of silver token
-		set orienation to the orienation to the first silver token 
-		set code to the code of the first silver token
-	if dist is 100 
-		return -1, -1,-1
-	else 
+
 		return dist, orientation, code
 
 
