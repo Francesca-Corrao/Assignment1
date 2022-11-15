@@ -169,6 +169,7 @@ Improvement
 This code work very weel for the specific problem it has to face but there are some improvement that can be make in order to make the code more :
 * when choosing a silver token we can verify that there are no golden token in the trajectory between the closest and the robot otherwise the robot when go to the silver token will take the golden one with it and so can never grab the silver token. The same can happen when choosing the gold token
 * modify the ending condition of the while so the robot can search for more or less then 6 token depend on how many there are non the map 
+
 Other improvement that won't make it more general are:
 *get the distance, orientation and code only one so it won't change the token while going there 
 * make sure it grab a silver token that hasn't already taken by add an if before the grab 
