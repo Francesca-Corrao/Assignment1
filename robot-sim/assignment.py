@@ -11,11 +11,14 @@ d_th = 0.4
 """ float: Threshold for the control of the linear distance"""
 
 d_th_gold=0.7
+""" float: Threshold for the control of the linear distance of a gold token
+	must be greater then d_th otherwise the robot will never leave the silver token """
+
 silver_taken=list()
-""" list: contain the id of the silver marker already taken"""
+""" list: contain the id of the silver marker taken"""
 
 gold_taken=list()
-""" list: contain the id of the gold marker already taken"""
+""" list: contain the id of the gold marker taken"""
 
 def drive(speed, seconds):
 	"""
@@ -99,7 +102,7 @@ def find_gold_token():
 def go_gold():
 	"""
 	Function to find the closest gold and go there, once the robot arrives to the gold token it
-	will release the token he has
+	will release the token he had grabbed previously
 	"""
 	while(len(gold_taken)<6):
 		print("Looking for gold token")
@@ -116,7 +119,7 @@ def go_gold():
 			gold_taken.append(code_gold)
 			return 0
 		elif -a_th<= rot_y_gold <= a_th: # if the robot is well aligned with the token, we go forward
-			print("Go Forward!.")
+			print("Go forward...")
 			drive(10, 2)
 		elif rot_y_gold < -a_th: # if the robot is not well aligned with the token, we move it on the left or on the right
 			print("Left a bit...")
@@ -127,9 +130,8 @@ def go_gold():
 			
 def go_silver():
 	"""
-	Function to find the silver token and go grab it
-	then call the function to go to the closest token
-	
+	Function to find the closest silver token among the free ones, go there and grab it
+	then call the function go_gold() untill it take every silver token
 	"""
 	
 	while (len(silver_taken)<6):
@@ -150,7 +152,7 @@ def go_silver():
 				go_gold()
 		elif -a_th<= rot_y <= a_th: 
 			# if the robot is well aligned with the token, we go forward
-			print("Ah, here we are!.")
+			print("Go forward...")
 			drive(10, 2)
 		elif rot_y < -a_th:
 			# if the robot is not well aligned with the token, we move it on the left or on the right
