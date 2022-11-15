@@ -16,6 +16,7 @@ python2 run.py assignment.py
 How it works 
 ---------
 To reach the goal the robot will look for tokens in front of it and choose the closest one, go to it and grab it. After grabbing the token the robot will turn looking for closest gold token in front of it, go to the closest one and once it is close enought to it will release the silver token. This will be done untill every silver token is with a different gold token. 
+
 The pseudocode of an algorithm to do it is the following: 
 ``` python
 while you haven't grab every token
@@ -68,7 +69,25 @@ function that got the distance of the closest silver token using the function fi
 		elif robot not aligned with the token, token on the right
 			turn right
 ```
+### go_gold() ###
+function that get distance, orientation and code of the closest gold token, drive and turn to go to it and once it is there release the silver token it grabbed before and add the code of the gold token to the list of already taken gold token.
 
+```python 
+	while haven't go to every gold token (list of gold token has less then 6 elements):
+		find_gold_token()
+		if it doesn't see any token:
+			turn
+		elif the distance is less than the linear distance threshold for gold
+			release silver token
+			add the id of the token to the list of taken gold token
+			return
+		elif robot is aligned with the token
+			go forward
+		elif robot not aligned with the token, token on the left
+			turn left
+		elif robot not aligned with the token, token on the right
+			turn right
+```
 ### find_silver_token() ###
 function to find the closest silver token and return it's distance, rotation and code
 
@@ -91,31 +110,11 @@ function to find the closest silver token and return it's distance, rotation and
 		else 
 			return dist, orientation, code
 ```
-### go_gold() ###
-function that get distance, orientation and code of the closest gold token, drive and turn to go to it and once it is there release the silver token it grabbed before and add the code of the gold token to the list of already taken gold token.
-
-```python 
-	while haven't go to every gold token (list of gold token has less then 6 elements):
-		find_gold_token()
-		if it doesn't see any token:
-			turn
-		elif the distance is less than the linear distance threshold for gold
-			release silver token
-			add the id of the token to the list of taken gold token
-			return
-		elif robot is aligned with the token
-			go forward
-		elif robot not aligned with the token, token on the left
-			turn left
-		elif robot not aligned with the token, token on the right
-			turn right
-```
-
 ### find_gold_token() ###
 function to find the closest gold token and return it's distance, orientation and code. It is the same of find_silver_token changing silver with gold so the only important changes are in the first if by checking if the silver token is gold and the code isn't in the list of already taken gold token. 
 
 ### turn and drive ###
-these are two function that will make the robot move
+these are two function that will make the robot move:
 * `drive`: given a speed and a time will make the robot go forward for time making the motors move with the speed passed
 * `turn`: given a speed and a time will make the robot turn for a time by making the motors rotate in different rotation with the speed passed
 
@@ -128,7 +127,7 @@ The API for controlling a simulated robot is designed to be as similar as possib
 
 The simulated robot has two motors configured for skid steering, connected to a two-output [Motor Board](https://studentrobotics.org/docs/kit/motor_board). The left motor is connected to output `0` and the right motor to output `1`.
 
-The Motor Board API is identical to [that of the SR API](https://studentrobotics.org/docs/programming/sr/motors/), except that motor boards cannot be addressed by serial number. So, to turn on the spot at one quarter of full power, one might write the following:
+So, to turn on the spot at one quarter of full power, one might write the following:
 
 ```python
 R.motors[0].m0.power = 25
@@ -143,10 +142,7 @@ The robot is equipped with a grabber, capable of picking up a token which is in 
 success = R.grab()
 ```
 
-The `R.grab` function returns `True` if a token was successfully picked up, or `False` otherwise. If the robot is already holding a token, it will throw an `AlreadyHoldingSomethingException`.
-
 To drop the token, call the `R.release` method.
-
 
 ### Vision ###
 
@@ -166,7 +162,6 @@ Each `Marker` object has the following attributes:
 * `res`: the value of the `res` parameter of `R.see`, for compatibility with the SR API.
 * `rot_y`: an alias for `centre.rot_y`
 * `timestamp`: the time at which the marker was seen (when `R.see` was called).
-
 
 Improvement
 -----------
