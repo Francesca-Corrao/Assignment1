@@ -9,7 +9,7 @@ To do this we will use a python robot simulator developed by [Student Robotics](
 How to Run the solution
 ----------------------
 In order to run the solution inside the robot-sim folder you have to execute 
-```shell
+```
 python2 run.py assignment.py
 ```
 it's important to specify to use python 2 because otherwise it won't execute if try to execute with python 3
@@ -31,7 +31,7 @@ while you haven't grab every token
 			release silver token
 	else go to the the silver token 
 ```
-to do this I implement four main function
+to do this I implement four function
 ### find_silver_token() ###
 function to find the closest silver token 
 
@@ -69,8 +69,9 @@ function to go the closest silver token and once it's there grab it and call the
 		if it doesn't see any token:
 			turn
 		elif the distance is less than the linear distance threshold
-			release the token you grabbed 
+			grab the silver token
 			add the id of the token to the list of taken silver token
+			call function go_gold()
 			return
 		elif robot is aligned with the token
 			go forward
@@ -89,7 +90,7 @@ function to go the closest gold token and once it is there release the silver to
 		if it doesn't see any token:
 			turn
 		elif the distance is less than the linear distance threshold for gold
-			release the token you grabbed 
+			release silver token
 			add the id of the token to the list of taken gold token
 			return
 		elif robot is aligned with the token
@@ -99,6 +100,20 @@ function to go the closest gold token and once it is there release the silver to
 		elif robot not aligned with the token, token on the right
 			turn right
 ```
+### main ###
+
+```python
+	initialize the robot 
+	set the threshold for the orientation a_th
+	set linear distance threshold for grab silver token d_th
+	set linear distance threshold for release gold token d_th_gold
+	set an empty list where it will put the silver token once it grab it silver
+	set an empty list where put the golden token once it release the silver token near to it gold
+	go_silver()
+	after  the task end 
+	
+```
+
 
 Robot API
 ---------
